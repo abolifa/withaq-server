@@ -17,8 +17,11 @@ class ContactResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'emoji-identification-card';
 
+
     protected static ?string $label = 'جهة اتصال';
     protected static ?string $pluralLabel = 'جهات الاتصال';
+
+    protected static ?int $navigationSort = 4;
 
 
     public static function form(Schema $schema): Schema

@@ -20,6 +20,8 @@ class DocumentResource extends Resource
     protected static ?string $model = Document::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'emoji-card-index-dividers';
+    protected static ?int $navigationSort = 1;
+
 
     protected static ?string $label = 'مستند';
     protected static ?string $pluralLabel = 'المستندات';

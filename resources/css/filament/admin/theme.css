@@ -3,3 +3,13 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 @source '../../../../resources/views/preview/**/*';
+
+
+.fi-sidebar {
+    @apply bg-white dark:bg-gray-900 border-l border-l-gray-200 dark:border-l-gray-800;
+}
+
+.fi-topbar-start img {
+    height: 60px !important;
+    width: auto !important;
+}

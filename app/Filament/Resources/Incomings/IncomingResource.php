@@ -24,6 +24,8 @@ class IncomingResource extends Resource
     protected static ?string $label = 'وارد';
     protected static ?string $pluralLabel = 'البريد الوارد';
 
+    protected static ?int $navigationSort = 6;
+
 
     public static function form(Schema $schema): Schema
     {

@@ -23,6 +23,7 @@ class LetterOfCreditResource extends Resource
 
     protected static ?string $label = 'اعتماد';
     protected static ?string $pluralLabel = 'الإعتمادات المستندية';
+    protected static ?int $navigationSort = 3;
 
 
     public static function form(Schema $schema): Schema

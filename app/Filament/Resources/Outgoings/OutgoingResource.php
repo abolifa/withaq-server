@@ -21,8 +21,11 @@ class OutgoingResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'emoji-up-arrow';
 
+
     protected static ?string $label = 'صادر';
     protected static ?string $pluralLabel = 'البريد الصادر';
+
+    protected static ?int $navigationSort = 5;
 
 
     public static function form(Schema $schema): Schema

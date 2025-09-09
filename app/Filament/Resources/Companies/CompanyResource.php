@@ -21,6 +21,7 @@ class CompanyResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'emoji-office-building';
 
+    protected static ?int $navigationSort = 0;
     protected static ?string $label = 'شركة';
     protected static ?string $pluralLabel = 'الشركات';
 

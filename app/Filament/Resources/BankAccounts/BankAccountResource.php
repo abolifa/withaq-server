@@ -24,6 +24,9 @@ class BankAccountResource extends Resource
     protected static ?string $label = 'حساب';
     protected static ?string $pluralLabel = 'الحسابات المصرفية';
 
+    protected static ?int $navigationSort = 2;
+
+
     public static function form(Schema $schema): Schema
     {
         return BankAccountForm::configure($schema);

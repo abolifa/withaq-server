@@ -32,8 +32,11 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->sidebarWidth('280px')
+            ->sidebarWidth('250px')
             ->sidebarCollapsibleOnDesktop()
+            ->brandLogo(asset('logo.png'))
+            ->darkModeBrandLogo(asset('logo-white.png'))
+            ->brandLogoHeight('8rem')
             ->font('Noto Kufi Arabic')
             ->maxContentWidth('full')
             ->viteTheme('resources/css/filament/admin/theme.css')
@@ -56,6 +59,9 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->plugins([
+                //
             ])
             ->authMiddleware([
                 Authenticate::class,

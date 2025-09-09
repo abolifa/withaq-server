@@ -81,15 +81,15 @@
         <table style="width: 100%; page-break-inside: avoid;">
             <tr>
                 <td style="text-align: center; vertical-align: top;">
-                    @if ($record->template?->show_stamp)
-                        <img src="{{ public_path('storage/' . $record->template?->stamp) }}"
-                             alt="الختم" height="200">
+                    @if ($record->template?->show_stamp && $record->template?->stamp && Storage::disk('public')->exists($record->template->stamp))
+                        <img src="{{ Storage::disk('public')->path($record->template->stamp) }}" alt="الختم"
+                             height="200">
                     @endif
                 </td>
                 <td style="text-align: center; vertical-align: top;">
-                    @if ($record->template?->show_signature)
-                        <img src="{{ public_path('storage/' . $record->template?->signature) }}"
-                             alt="التوقيع" height="200">
+                    @if ($record->template?->show_signature && $record->template?->signature && Storage::disk('public')->exists($record->template->signature))
+                        <img src="{{ Storage::disk('public')->path($record->template->signature) }}" alt="التوقيع"
+                             height="200">
                     @endif
                 </td>
             </tr>

@@ -39,16 +39,16 @@ class Outgoing extends Model
         'issue_date' => 'date',
     ];
 
-//    protected static function booted(): void
-//    {
-//        static::created(function (Outgoing $outgoing) {
-//            $outgoing->generatePdf();
-//        });
-//
-//        static::updated(function (Outgoing $outgoing) {
-//            $outgoing->generatePdf();
-//        });
-//    }
+    protected static function booted(): void
+    {
+        static::created(function (Outgoing $outgoing) {
+            $outgoing->generatePdf();
+        });
+
+        static::updated(function (Outgoing $outgoing) {
+            $outgoing->generatePdf();
+        });
+    }
 
     public function generatePdf(): void
     {
@@ -56,8 +56,17 @@ class Outgoing extends Model
             if ($this->document_path && Storage::disk('public')->exists($this->document_path)) {
                 Storage::disk('public')->delete($this->document_path);
             }
-            $fileName = "outgoings/outgoing_$this->id.pdf";
+
+            // ✅ Ensure relations loaded
+            $this->load(['company', 'contact', 'template']);
+
             $html = View::make('print.outgoing', ['record' => $this])->render();
+
+            // Debug: save HTML so you can check what’s wrong
+            Storage::disk('local')->put("debug_outgoing_{$this->id}.html", $html);
+
+            $fileName = "outgoings/outgoing_{$this->id}.pdf";
+
             $config = [
                 'mode' => 'utf-8',
                 'format' => 'A4',
@@ -70,8 +79,8 @@ class Outgoing extends Model
                 'autoLangToFont' => true,
                 'dpi' => 150,
                 'tempDir' => storage_path('app/mpdf_temp'),
-
             ];
+
             $mpdf = new Mpdf($config);
             if ($this->company && $this->company->letterhead) {
                 $letterheadPath = Storage::disk('public')->path($this->company->letterhead);
@@ -81,18 +90,18 @@ class Outgoing extends Model
                     $mpdf->watermarkImgBehind = true;
                 }
             }
-            $mpdf->SetHTMLFooter('
-        <div style="text-align: center; font-size: 10pt;">
-            صفحة {PAGENO} من {nb}
-        </div>
-    ');
+
+            $mpdf->SetHTMLFooter('<div style="text-align: center; font-size: 10pt;">صفحة {PAGENO} من {nb}</div>');
             $mpdf->WriteHTML($html);
+
             Storage::disk('public')->put($fileName, $mpdf->Output('', 'S'));
             $this->updateQuietly(['document_path' => $fileName]);
+
         } catch (Throwable $e) {
-            Log::error('Failed to generate PDF for Outgoing ID ' . $this->id . ': ' . $e->getMessage());
+            Log::error('PDF generation failed: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
         }
     }
+
 
     public function contact(): BelongsTo
     {

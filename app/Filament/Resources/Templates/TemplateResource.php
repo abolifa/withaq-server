@@ -24,6 +24,8 @@ class TemplateResource extends Resource
     protected static ?string $label = 'قالب';
     protected static ?string $pluralLabel = 'القوالب';
 
+    protected static ?int $navigationSort = 7;
+
 
     public static function form(Schema $schema): Schema
     {
