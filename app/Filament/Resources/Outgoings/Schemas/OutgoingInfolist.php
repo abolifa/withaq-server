@@ -46,7 +46,7 @@ class OutgoingInfolist
                     ->schema([
                         ViewEntry::make('attachments')
                             ->label('المرفقات')
-                            ->view('preview.attachments-preview'),
+                            ->view('preview.attachments'),
                     ])->columnSpanFull()
                     ->columns(1)
                     ->hidden(fn($record) => empty($record->attachments)),
